@@ -1,7 +1,7 @@
 // src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { Button, Typography, Input, Form, notification } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, KeyOutlined } from '@ant-design/icons'; // Import KeyOutlined
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
@@ -16,7 +16,7 @@ function LoginPage() {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const data = await authService.login(values.email, values.password);
+      const data = await authService.login(values.email, values.password, values.tenant_key);
       login(data);
       navigate('/');
       notification.success({
@@ -64,6 +64,18 @@ function LoginPage() {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
+            />
+          </Form.Item>
+
+          {/* New Form Item for Tenant Key */}
+          <Form.Item
+            name="tenant_key"
+            rules={[{ required: true, message: 'Please enter your tenant key!' }]}
+          >
+            <Input
+              prefix={<KeyOutlined className="site-form-item-icon" />}
+              type="password" // Use type="password" as requested
+              placeholder="Tenant Key"
             />
           </Form.Item>
 

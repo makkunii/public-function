@@ -24,11 +24,12 @@ api.interceptors.request.use(
 );
 
 const authService = {
-  login: async (email, password) => {
+  login: async (email, password, TENANT_KEY) => {
     try {
       const response = await api.post('/api/login', {
         email,
         password,
+        TENANT_KEY,
       });
       return response.data;
     } catch (error) {
